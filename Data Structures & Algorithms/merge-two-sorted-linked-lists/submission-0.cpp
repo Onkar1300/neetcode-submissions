@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode* tempHead;
+        ListNode* newHead = nullptr;
+
+        cout<<"Part-1"<<endl;
+        if(list1 && list2){
+            if(list1->val > list2->val){
+                newHead = list2;
+                tempHead = list2;
+                list2=list2->next;
+            }
+            else{
+                newHead = list1;
+                tempHead = list1;
+                list1=list1->next;
+            }
+        }
+        else if(list1){
+            newHead = list1;
+            tempHead = list1;
+            list1=list1->next;
+        }
+        else if(list2){
+            newHead = list2;
+            tempHead = list2;
+            list2=list2->next;
+        }
+        cout<<"Part-2"<<endl;
+        while(list1 && list2){
+            if(list1->val > list2->val){
+                tempHead->next = list2;
+                tempHead = tempHead->next;
+                list2=list2->next;
+            }
+            else{
+                tempHead->next = list1;
+                tempHead = tempHead->next;
+                list1=list1->next;
+            }
+        }
+        cout<<"Part-3"<<endl;
+        while(list1){
+            tempHead->next = list1;
+            tempHead = tempHead->next;
+            list1=list1->next;
+        }
+        cout<<"Part-4"<<endl;
+        while(list2){
+            tempHead->next = list2;
+            tempHead = tempHead->next;
+            list2=list2->next;
+        }
+        cout<<"returning newHead"<<endl;
+        return newHead;
+    }
+};
