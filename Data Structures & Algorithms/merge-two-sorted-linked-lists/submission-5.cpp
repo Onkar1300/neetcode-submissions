@@ -8,29 +8,36 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode dummy(0);
-        ListNode* tail = &dummy;
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(!list1 && !list2){return list1;}
+        ListNode* fhead = new ListNode(0);
+        ListNode* merged = fhead;
         while(list1 && list2){
-            if(list1->val > list2->val){
-                tail->next = list2;
-                list2 = list2->next;
-            }
-            else{
-                tail->next = list1;
+            if(list1->val < list2->val){
+                fhead->next = list1;
                 list1 = list1->next;
             }
-            tail=tail->next;
+            else{
+                fhead->next = list2;
+                list2 = list2->next;
+            }
+            fhead = fhead->next;
         }
         if(list1){
-            tail->next = list1;
-        }else if(list2){
-            tail->next = list2;
+            fhead->next = list1;
         }
-        return (dummy.next);
-        
+        if(list2){
+            fhead->next = list2;
+        }
+        return merged->next;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode* head = nullptr;
+        for(int i=0;i<lists.size();i++){
+            head = mergeTwoLists(lists[i],head);
+        }
+        return head;
     }
 };
